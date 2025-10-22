@@ -130,7 +130,7 @@ ZA_INLINE static void time2dos(time_t t, uint16_t* dos_date, uint16_t* dos_time)
 /// @param path ZIP文件路径
 /// @return  实例指针
 ZA_INLINE ZAInstance* za_init(char const* path) {
-	init_crc32_table(); // 初始化CRC32查找表
+	init_crc32_table();	  // 初始化CRC32查找表
 	ZAInstance* za = (ZAInstance*)malloc(sizeof(ZAInstance));
 	if (!za) return NULL; // 内存分配失败
 	za->fp = fopen(path, "wb");
@@ -151,8 +151,8 @@ ZA_INLINE ZAInstance* za_init(char const* path) {
 /// @param use_cust_time     是否使用provided_time（非0表示使用）
 /// @param cust_time         如果使用，则为指定的修改时间；否则从文件属性获取
 /// @return                  非0表示失败
-ZA_INLINE int za_add_file(ZAInstance* za, char const* src_path, char const* dst_path, int use_cust_time,
-						  time_t cust_time) {
+ZA_INLINE int za_add_file(
+		ZAInstance* za, char const* src_path, char const* dst_path, int use_cust_time, time_t cust_time) {
 	if (!za || !za->fp) return -1; // 无指针
 
 	FILE* src = fopen(src_path, "rb");
@@ -182,7 +182,7 @@ ZA_INLINE int za_add_file(ZAInstance* za, char const* src_path, char const* dst_
 	uint32_t local_header_offset = ftell(za->fp);
 
 	// 写入局部文件头
-	ZALocalFileHeader local_header	= {0};
+	ZALocalFileHeader local_header	= { 0 };
 	local_header.signature			= 0x04034b50;
 	local_header.version_needed		= 20;
 	local_header.general_purpose	= 0;
@@ -207,7 +207,7 @@ ZA_INLINE int za_add_file(ZAInstance* za, char const* src_path, char const* dst_
 	fclose(src);
 
 	// 构造中央目录记录
-	ZACentralDirectoryHeader cd_header = {0};
+	ZACentralDirectoryHeader cd_header = { 0 };
 	cd_header.signature				   = 0x02014b50;
 	cd_header.version_made_by		   = 20;
 	cd_header.version_needed		   = 20;
@@ -264,7 +264,7 @@ ZA_INLINE int za_ok(ZAInstance* za) {
 	uint32_t central_dir_size = ftell(za->fp) - central_dir_offset;
 
 	// 写入结束记录
-	ZAEndOfCentralDirectoryRecord end_record = {0};
+	ZAEndOfCentralDirectoryRecord end_record = { 0 };
 	end_record.signature					 = 0x06054b50;
 	end_record.disk_number					 = 0;
 	end_record.central_dir_disk				 = 0;
