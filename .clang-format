@@ -1,7 +1,7 @@
 BasedOnStyle: Google
 Language: Cpp
 Standard: Latest
-ColumnLimit: 106
+ColumnLimit: 127
 IndentWidth: 4
 TabWidth: 4
 ConstructorInitializerIndentWidth: 4

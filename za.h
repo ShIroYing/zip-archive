@@ -151,8 +151,7 @@ ZA_INLINE ZAInstance* za_init(char const* path) {
 /// @param use_cust_time     是否使用provided_time（非0表示使用）
 /// @param cust_time         如果使用，则为指定的修改时间；否则从文件属性获取
 /// @return                  非0表示失败
-ZA_INLINE int za_add_file(
-		ZAInstance* za, char const* src_path, char const* dst_path, int use_cust_time, time_t cust_time) {
+ZA_INLINE int za_add_file(ZAInstance* za, char const* src_path, char const* dst_path, int use_cust_time, time_t cust_time) {
 	if (!za || !za->fp) return -1; // 无指针
 
 	FILE* src = fopen(src_path, "rb");
@@ -202,8 +201,7 @@ ZA_INLINE int za_add_file(
 	// 写入文件数据
 	char   buffer[4096];
 	size_t bytes_read;
-	while ((bytes_read = fread(buffer, 1, sizeof(buffer), src)) > 0)
-		fwrite(buffer, 1, bytes_read, za->fp);
+	while ((bytes_read = fread(buffer, 1, sizeof(buffer), src)) > 0) fwrite(buffer, 1, bytes_read, za->fp);
 	fclose(src);
 
 	// 构造中央目录记录
